@@ -45,7 +45,7 @@ jobs:
           cd build
           $env:QT_QPA_PLATFORM="offscreen"
           $env:QML2_IMPORT_PATH="D:/a/test-windows/Qt/5.15.2/msvc2019_64/qml"
-          ctest --output-on-failure -C Release -R "QtTests|QmlTests"
+          ctest --output-on-failure -C ${{ env.BUILD_TYPE }} -R "QtTests|QmlTests"
 
       - name: Package executable
         run: |
