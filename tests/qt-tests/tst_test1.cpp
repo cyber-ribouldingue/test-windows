@@ -1,4 +1,3 @@
-#include <QtTest>
 #include <QtTest/QtTest>
 
 class Test1 : public QObject
@@ -6,10 +5,9 @@ class Test1 : public QObject
     Q_OBJECT
 
 private slots:
-    void initTestCase() { }
-    void cleanupTestCase() { }
-    void test_case1() {
-        QVERIFY(true);
+    void exampleTest()
+    {
+        QVERIFY2(true, "This is a placeholder test");
     }
 };
 
