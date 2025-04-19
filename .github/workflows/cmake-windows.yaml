@@ -46,9 +46,10 @@ jobs:
           ctest --output-on-failure -C ${{ env.BUILD_TYPE }} -R "QtTests|QmlTests"
 
       - name: Deploy Qt libraries with windeployqt
+        shell: pwsh
         run: |
-          & "C:\Qt\${{ env.QT_VERSION }}\msvc2019_64\bin\windeployqt.exe" build\Release\TestApp.exe
-
+           & "$Env:Qt6_DIR/../../../bin/windeployqt.exe" build\Release\TestApp.exe
+           
       - name: Package executable and DLLs
         run: |
           mkdir package
