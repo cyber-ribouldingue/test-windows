@@ -1,4 +1,4 @@
-name: Build & Test (Windows - Visual Studio - Qt 5.15.2)
+name: Build & Test (Windows - Qt 5.15.2 - MSVC)
 
 on:
   push:
@@ -13,15 +13,15 @@ env:
   QT_VERSION: 5.15.2
 
 jobs:
-  build-windows:
-    name: Build and Test on Windows (MSVC - Qt 5.15.2)
+  build:
+    name: Build and Test on Windows
     runs-on: windows-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Qt (base only)
+      - name: Install Qt 5.15.2 (MSVC2019 64-bit)
         uses: jurplel/install-qt-action@v4
         with:
           version: ${{ env.QT_VERSION }}
@@ -30,12 +30,10 @@ jobs:
           arch: win64_msvc2019_64
 
       - name: Configure CMake project
-        run: |
-          cmake -B build -G "Visual Studio 17 2022" -A x64 -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
+        run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
 
-      - name: Build project
-        run: |
-          cmake --build build --config ${{ env.BUILD_TYPE }}
+      - name: Build project (Release)
+        run: cmake --build build --config ${{ env.BUILD_TYPE }}
 
       - name: Run CppTests
         run: |
