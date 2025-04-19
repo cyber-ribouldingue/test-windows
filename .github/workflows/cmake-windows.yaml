@@ -8,7 +8,7 @@ on:
 
 env:
   BUILD_TYPE: Release
-  QT_VERSION: 6.2.4
+  QT_VERSION: 5.15.2
 
 jobs:
   build-windows:
@@ -19,11 +19,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install Qt + Qt Tools
+      - name: Install Qt + Qt Tools (Qt 5.15.2)
         uses: jurplel/install-qt-action@v4
         with:
           version: ${{ env.QT_VERSION }}
           host: windows
+          target: desktop
           arch: win64_msvc2019_64
           modules: "qttools"
 
@@ -49,7 +50,7 @@ jobs:
       - name: Deploy Qt libraries with windeployqt
         shell: pwsh
         run: |
-          $qtBinDir = "$Env:GITHUB_WORKSPACE\Qt\6.6.3\msvc2019_64\bin"
+          $qtBinDir = "$Env:GITHUB_WORKSPACE\Qt\5.15.2\msvc2019_64\bin"
           & "$qtBinDir\windeployqt.exe" build\Release\TestApp.exe
 
       - name: Package executable and DLLs
