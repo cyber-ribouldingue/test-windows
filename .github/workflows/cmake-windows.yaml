@@ -1,4 +1,3 @@
-#test
 name: Build & Test (Windows)
 
 on:
@@ -27,26 +26,38 @@ jobs:
           host: windows
           arch: win64_msvc2019_64
 
-      - name: Configure project with CMake
+      - name: Install Ninja
+        uses: ashutoshvarma/setup-ninja@v1
+
+      - name: Configure CMake project
         run: cmake -B build -G "Ninja" -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
 
       - name: Build project
         run: cmake --build build --config ${{ env.BUILD_TYPE }}
 
-      - name: Run tests
+      - name: Run tests (normal tests)
         run: |
           cd build
           ctest --output-on-failure -E "QtTests|QmlTests"
+
+      - name: Run tests (Qt/Qml tests in offscreen mode)
+        run: |
+          cd build
           set QT_QPA_PLATFORM=offscreen
           ctest --output-on-failure -R "QtTests|QmlTests"
 
-      - name: Package binary
+      - name: Deploy Qt libraries (windeployqt)
+        run: |
+          & "C:\Qt\${{ env.QT_VERSION }}\msvc2019_64\bin\windeployqt.exe" build\TestApp.exe
+
+      - name: Package executable + DLLs
         run: |
           mkdir package
           copy build\TestApp.exe package\
+          copy build\*.dll package\
           7z a TestApp-windows.zip .\package\*
 
-      - name: Upload artifact
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: TestApp-windows
