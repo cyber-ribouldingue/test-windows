@@ -37,8 +37,8 @@ jobs:
 
       - name: Deploy Qt DLLs for executables
         run: |
-          & "D:/a/test-windows/Qt/5.15.2/msvc2019_64/bin/windeployqt.exe" build/Release/TestApp.exe
-          & "D:/a/test-windows/Qt/5.15.2/msvc2019_64/bin/windeployqt.exe" build/Release/QmlTests.exe
+           & "D:/a/test-windows/Qt/5.15.2/msvc2019_64/bin/windeployqt.exe" build/Release/TestApp.exe
+           & "D:/a/test-windows/Qt/5.15.2/msvc2019_64/bin/windeployqt.exe" build/tests/qml-tests/Release/QmlTests.exe
 
       - name: Run tests (offscreen) with detailed output
         run: |
