@@ -26,10 +26,14 @@ jobs:
           host: windows
           arch: win64_msvc2019_64
 
-      - name: Install Ninja
+      - name: Install Ninja if not present
+        shell: pwsh
         run: |
-          choco install ninja
-          refreshenv
+          if (-not (Get-Command ninja -ErrorAction SilentlyContinue)) {
+            choco install ninja
+          } else {
+            Write-Host "Ninja already installed."
+          }
 
       - name: Configure CMake project
         run: cmake -B build -G "Ninja" -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
@@ -42,10 +46,10 @@ jobs:
           cd build
           ctest --output-on-failure -E "QtTests|QmlTests"
 
-      - name: Run tests (QtTests et QmlTests en offscreen)
+      - name: Run tests (QtTests et QmlTests en mode offscreen)
         run: |
           cd build
-          set QT_QPA_PLATFORM=offscreen
+          $env:QT_QPA_PLATFORM="offscreen"
           ctest --output-on-failure -R "QtTests|QmlTests"
 
       - name: Deploy Qt libraries with windeployqt
