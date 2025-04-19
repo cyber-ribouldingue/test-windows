@@ -1,5 +1,5 @@
 #include <QtTest>
-
+#include <QObject>
 class CppTest : public QObject
 {
     Q_OBJECT
