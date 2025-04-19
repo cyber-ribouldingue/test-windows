@@ -1,0 +1,5 @@
+---
+Checks: '-*,modernize-*,performance-*,readability-*,bugprone-*,clang-analyzer-*'
+WarningsAsErrors: ''
+FormatStyle: file
+...
