@@ -1,12 +1,11 @@
-cmake_minimum_required(VERSION 3.22)
+# CMakeLists.txt dans tests/cpp-tests/
 
-project(CppTest LANGUAGES CXX)
+add_executable(CppTest
+    tst_cpptest.cpp
+)
 
-enable_testing()
+find_package(Qt5 REQUIRED COMPONENTS Test)
 
-find_package(Qt6 REQUIRED COMPONENTS Test)
+target_link_libraries(CppTest PRIVATE Qt5::Test)
 
-add_executable(CppTest tst_cpptest.cpp)
 add_test(NAME CppTest COMMAND CppTest)
-
-target_link_libraries(CppTest PRIVATE Qt6::Test)
