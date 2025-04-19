@@ -2,12 +2,16 @@
 
 void Setup::applicationAvailable()
 {
+    // Code optionnel
 }
 
-void Setup::qmlEngineAvailable(QQmlEngine *engine)
+void Setup::qmlEngineAvailable(QQmlEngine* engine)
 {
+    Q_UNUSED(engine)
+    // Code optionnel
 }
 
 void Setup::cleanupTestCase()
 {
+    // Code optionnel
 }
