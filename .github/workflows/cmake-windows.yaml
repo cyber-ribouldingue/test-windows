@@ -1,4 +1,4 @@
-name: Build & Test (Windows - Visual Studio)
+name: Build & Test (Windows - Visual Studio - Qt 5.15.2)
 
 on:
   push:
@@ -12,21 +12,20 @@ env:
 
 jobs:
   build-windows:
-    name: Build and Test on Windows (MSVC)
+    name: Build and Test on Windows (MSVC - Qt 5.15.2)
     runs-on: windows-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install Qt + Qt Tools (Qt 5.15.2)
+      - name: Install Qt (base only, no modules)
         uses: jurplel/install-qt-action@v4
         with:
           version: ${{ env.QT_VERSION }}
           host: windows
           target: desktop
           arch: win64_msvc2019_64
-          modules: "qttools"
 
       - name: Configure CMake project
         run: |
@@ -47,17 +46,10 @@ jobs:
           $env:QT_QPA_PLATFORM="offscreen"
           ctest --output-on-failure -C ${{ env.BUILD_TYPE }} -R "QtTests|QmlTests"
 
-      - name: Deploy Qt libraries with windeployqt
-        shell: pwsh
-        run: |
-          $qtBinDir = "$Env:GITHUB_WORKSPACE\Qt\5.15.2\msvc2019_64\bin"
-          & "$qtBinDir\windeployqt.exe" build\Release\TestApp.exe
-
-      - name: Package executable and DLLs
+      - name: Package executable only
         run: |
           mkdir package
           copy build\Release\TestApp.exe package\
-          copy build\Release\*.dll package\
           7z a TestApp-windows.zip .\package\*
 
       - name: Upload artifact
@@ -65,3 +57,4 @@ jobs:
         with:
           name: TestApp-windows
           path: TestApp-windows.zip
+
