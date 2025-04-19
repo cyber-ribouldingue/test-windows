@@ -1,16 +1,16 @@
-#include <QtTest>
+#include <QtTest/QtTest>
 #include <QObject>
-class CppTest : public QObject
+
+class TestExample : public QObject
 {
     Q_OBJECT
 
 private slots:
-    void initTestCase() { }
-    void cleanupTestCase() { }
-    void test_case1() {
-        QCOMPARE(1 + 1, 2);
+    void test_case_1()
+    {
+        QVERIFY(true);
     }
 };
 
-QTEST_APPLESS_MAIN(CppTest)
+QTEST_MAIN(TestExample)
 #include "tst_cpptest.moc"
