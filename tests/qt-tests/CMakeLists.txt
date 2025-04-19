@@ -1,12 +1,16 @@
-cmake_minimum_required(VERSION 3.22)
+find_package(Qt5 REQUIRED COMPONENTS Test QuickTest Qml Quick)
 
-project(QtTests LANGUAGES CXX)
+add_executable(QtTests
+    tst_test1.cpp
+)
 
-enable_testing()
+set_target_properties(QtTests PROPERTIES AUTOMOC ON)
 
-find_package(Qt5 REQUIRED COMPONENTS QuickTest Test Qml Quick)
+target_link_libraries(QtTests PRIVATE
+    Qt5::Test
+    Qt5::QuickTest
+    Qt5::Qml
+    Qt5::Quick
+)
 
-add_executable(QtTests tst_test1.cpp)
 add_test(NAME QtTests COMMAND QtTests)
-
-
