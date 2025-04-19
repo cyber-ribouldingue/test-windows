@@ -48,7 +48,9 @@ jobs:
       - name: Deploy Qt libraries with windeployqt
         shell: pwsh
         run: |
-           & "$Env:Qt6_DIR/../../../bin/windeployqt.exe" build\Release\TestApp.exe
+           $qtBinDir = (Get-Item $Env:Qt6_DIR).Parent.Parent.FullName + "\bin"
+           & "$qtBinDir\windeployqt.exe" build\Release\TestApp.exe
+
            
       - name: Package executable and DLLs
         run: |
