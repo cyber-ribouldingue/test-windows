@@ -27,7 +27,9 @@ jobs:
           arch: win64_msvc2019_64
 
       - name: Install Ninja
-        uses: ashutoshvarma/setup-ninja@v1
+        run: |
+          choco install ninja
+          refreshenv
 
       - name: Configure CMake project
         run: cmake -B build -G "Ninja" -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
@@ -35,29 +37,29 @@ jobs:
       - name: Build project
         run: cmake --build build --config ${{ env.BUILD_TYPE }}
 
-      - name: Run tests (normal tests)
+      - name: Run tests (CppTest uniquement)
         run: |
           cd build
           ctest --output-on-failure -E "QtTests|QmlTests"
 
-      - name: Run tests (Qt/Qml tests in offscreen mode)
+      - name: Run tests (QtTests et QmlTests en offscreen)
         run: |
           cd build
           set QT_QPA_PLATFORM=offscreen
           ctest --output-on-failure -R "QtTests|QmlTests"
 
-      - name: Deploy Qt libraries (windeployqt)
+      - name: Deploy Qt libraries with windeployqt
         run: |
           & "C:\Qt\${{ env.QT_VERSION }}\msvc2019_64\bin\windeployqt.exe" build\TestApp.exe
 
-      - name: Package executable + DLLs
+      - name: Package executable and DLLs
         run: |
           mkdir package
           copy build\TestApp.exe package\
           copy build\*.dll package\
           7z a TestApp-windows.zip .\package\*
 
-      - name: Upload Artifact
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: TestApp-windows
