@@ -1,18 +1,18 @@
-cmake_minimum_required(VERSION 3.22)
+find_package(Qt5 REQUIRED COMPONENTS Test QuickTest Qml Quick)
 
-project(QmlTests LANGUAGES CXX)
+add_executable(QmlTests
+    main.cpp
+    setup.cpp
+    setup.h
+)
 
-enable_testing()
+set_target_properties(QmlTests PROPERTIES AUTOMOC ON)
 
-find_package(Qt5 REQUIRED COMPONENTS QuickTest Test Qml Quick)
+target_link_libraries(QmlTests PRIVATE
+    Qt5::Test
+    Qt5::QuickTest
+    Qt5::Qml
+    Qt5::Quick
+)
 
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-
-add_definitions(-DQUICK_TEST_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
-
-add_executable(QmlTests main.cpp setup.cpp)
 add_test(NAME QmlTests COMMAND QmlTests)
-
-
