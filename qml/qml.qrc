@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/qml">
         <file>Main.qml</file>
-        <file>../tests/qml-tests/tst_test1.qml</file>
     </qresource>
 </RCC>
