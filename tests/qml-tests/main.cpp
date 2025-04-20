@@ -10,9 +10,9 @@ int main(int argc, char *argv[])
     QString qmlFile;
 
     if (qEnvironmentVariableIsSet("CI") || qEnvironmentVariableIsSet("GITHUB_ACTIONS")) {
-        qmlFile = ":/TestHeadless.qml";  // Chargement spécial pour CI
+        qmlFile = ":/TestHeadless.qml";  // Environnement CI => QML simple
     } else {
-        qmlFile = ":/Main.qml";           // Chargement normal local
+        qmlFile = ":/Main.qml";           // Local PC => vrai Main.qml
     }
 
     if (!QFileInfo::exists(qmlFile)) {
@@ -20,7 +20,6 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    qDebug() << "Loading QML file:" << qmlFile;
-
+    qDebug() << "Trying to load QML:" << qmlFile;
     return quick_test_main(argc, argv, "QmlTests", qmlFile.toUtf8().constData());
 }
