@@ -9,11 +9,10 @@ int main(int argc, char *argv[])
 
     QString qmlFile;
 
-    // Si on détecte un environnement CI (comme GitHub Actions)
     if (qEnvironmentVariableIsSet("CI") || qEnvironmentVariableIsSet("GITHUB_ACTIONS")) {
-        qmlFile = ":/TestHeadless.qml";
+        qmlFile = ":/TestHeadless.qml";  // Chargement spécial pour CI
     } else {
-        qmlFile = ":/Main.qml";
+        qmlFile = ":/Main.qml";           // Chargement normal local
     }
 
     if (!QFileInfo::exists(qmlFile)) {
