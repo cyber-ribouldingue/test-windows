@@ -30,7 +30,7 @@ jobs:
           arch: win64_msvc2019_64
 
       - name: Configure CMake project
-        run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
+        run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64
 
       - name: Build project
         run: cmake --build build --config ${{ env.BUILD_TYPE }}
@@ -38,7 +38,7 @@ jobs:
       - name: Verify executables existence
         run: |
           if (!(Test-Path -Path "build/Release/TestApp.exe")) { Write-Error "TestApp.exe not found"; exit 1 }
-          if (!(Test-Path -Path "build/Release/QmlTests.exe")) { Write-Error "QmlTests.exe not found"; exit 1 }
+          if (!(Test-Path -Path "build/tests/qml-tests/Release/QmlTests.exe")) { Write-Error "QmlTests.exe not found"; exit 1 }
 
       - name: Deploy Qt DLLs for executables
         run: |
