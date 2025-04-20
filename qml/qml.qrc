@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>Main.qml</file>
-        <file>TestHeadless.qml</file> <!-- Ligne ajoutée ici -->
+        <file>TestHeadless.qml</file> <!-- Nouvelle ligne ici -->
     </qresource>
 </RCC>
