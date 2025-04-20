@@ -1,5 +1,6 @@
 <RCC>
-    <qresource prefix="/qml">
+    <qresource prefix="/">
         <file>Main.qml</file>
+        <file>TestHeadless.qml</file> <!-- Ajouté ici -->
     </qresource>
 </RCC>
